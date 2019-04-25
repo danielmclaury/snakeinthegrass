@@ -3,12 +3,13 @@ const COLS = 99;
 
 const TICKDELAY = 60;
 
-const GAMEOVERTEXT = "OUCH";
-const GAMEOVERCOLOR = 'white';
-const GAMEOVEROUTLINE = 'black';
-const GAMEOVERFONT = '72px Impact';
+const PAUSETEXT = "Press Space";
+const GAMEOVERTEXT = "OUCH!";
+const TEXTCOLOR = 'white';
+const TEXTOUTLINE = 'black';
+const TEXTFONT = '72px Impact';
 
-var canvas, scoreDiv, highScoreDiv;
+var canvas, context, scoreDiv, highScoreDiv;
 
 var board;
 
@@ -21,6 +22,7 @@ var score, highScore;
 const init = function()
 {
 	canvas = document.getElementById('canvas');
+	context = canvas.getContext('2d');
 	scoreDiv = document.getElementById('score');
 	highScoreDiv = document.getElementById('highscore');
 	
@@ -79,15 +81,14 @@ const addPoints = function(points)
 }
 
 const gameover = function()
-{
-  var context = canvas.getContext('2d');
-  
+{  
   paused = true;
   
-  context.font = GAMEOVERFONT;
+  context.font = TEXTFONT;
   context.textAlign = "center";
-  context.fillStyle = GAMEOVERCOLOR;
-  context.strokeStyle = GAMEOVEROUTLINE;
+  context.fillStyle = TEXTCOLOR;
+  context.strokeStyle = TEXTOUTLINE;
+  context.lineWidth = 6;
   context.strokeText(GAMEOVERTEXT, canvas.width/2, canvas.height/2);
   context.fillText(GAMEOVERTEXT, canvas.width/2, canvas.height/2);
 
@@ -126,6 +127,19 @@ const keyDownHandler = function(e)
   {
 	  paused = ! paused;
 	  
-	  if(! paused) { setTimeout(tick, 1); }
+	  if(paused)
+	  {
+		context.font = TEXTFONT;
+        context.textAlign = "center";
+        context.fillStyle = TEXTCOLOR;
+        context.strokeStyle = TEXTOUTLINE;
+        context.lineWidth = 6;
+        context.strokeText(PAUSETEXT, canvas.width/2, canvas.height/2);
+        context.fillText(PAUSETEXT, canvas.width/2, canvas.height/2);  
+	  }
+	  else
+	  {
+	    setTimeout(tick, 0);
+	  }
   }
 };

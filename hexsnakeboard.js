@@ -16,7 +16,7 @@ class HexSnakeBoard
 	
 	this.snakeColor = 'green';
 	this.appleColor = 'red';
-	this.gridColor = 'grey';
+	this.gridColor = 'brown';
   }
   
   setSnakeDir(p)
@@ -89,9 +89,10 @@ class HexSnakeBoard
   
   drawGrid()
   {
-	this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);  
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);  
 	  
 	this.context.strokeStyle = this.gridColor;
+	this.context.lineWidth = 1;
 	  
 	for(var i = 0; i < this.hexcoords.length; i++)
 	{
@@ -106,9 +107,7 @@ class HexSnakeBoard
   }
   
   fillGrid()
-  {
-	this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);  
-	  
+  {  
 	this.context.fillStyle = 'lightgreen';
 	  
 	for(var i = 0; i < this.hexcoords.length; i++)
