@@ -15,7 +15,7 @@ var board;
 
 var inputDir;
 
-var paused;
+var paused, takingInput;
 
 var score, highScore;
 
@@ -35,14 +35,23 @@ const init = function()
 
 const start = function()
 {
+	takingInput = true;
+	
     board = new HexSnakeBoard(canvas, ROWS, COLS);
 	board.placeApple();
+	
+	board.drawGrid();
+	board.fillGrid();	
+    board.drawSnake();
+	board.drawApple();
+	
+    pause();	
 	
 	inputDir = [1, 1];
 	
 	score = 0;
 	
-	tick();
+	setTimeout(tick, TICKDELAY);
 };
 
 const tick = function()
@@ -82,7 +91,7 @@ const addPoints = function(points)
 
 const gameover = function()
 {  
-  paused = true;
+  takingInput = false;
   
   context.font = TEXTFONT;
   context.textAlign = "center";
@@ -92,12 +101,16 @@ const gameover = function()
   context.strokeText(GAMEOVERTEXT, canvas.width/2, canvas.height/2);
   context.fillText(GAMEOVERTEXT, canvas.width/2, canvas.height/2);
 
-  start();
+  setTimeout(start, 1000);
 };
 
 const keyDownHandler = function(e)
 {
+  if(!takingInput) { return; }
+	
   var c = e.key.toUpperCase();
+  
+  if(paused && c != " ") { return; }
 	
   if("QWERT".includes(c))
   {
@@ -125,21 +138,27 @@ const keyDownHandler = function(e)
   }
   else if(c == " ")
   {
-	  paused = ! paused;
-	  
-	  if(paused)
+	  if(! paused)
 	  {
-		context.font = TEXTFONT;
-        context.textAlign = "center";
-        context.fillStyle = TEXTCOLOR;
-        context.strokeStyle = TEXTOUTLINE;
-        context.lineWidth = 6;
-        context.strokeText(PAUSETEXT, canvas.width/2, canvas.height/2);
-        context.fillText(PAUSETEXT, canvas.width/2, canvas.height/2);  
+		  pause();
 	  }
 	  else
 	  {
-	    setTimeout(tick, 0);
+		paused = false;
+		setTimeout(tick, 2 * TICKDELAY);  
 	  }
   }
 };
+
+const pause = function()
+{
+	paused = true;
+	
+	context.font = TEXTFONT;
+	context.textAlign = "center";
+	context.fillStyle = TEXTCOLOR;
+	context.strokeStyle = TEXTOUTLINE;
+	context.lineWidth = 6;
+	context.strokeText(PAUSETEXT, canvas.width/2, canvas.height/2);
+	context.fillText(PAUSETEXT, canvas.width/2, canvas.height/2);  
+}
