@@ -107,7 +107,9 @@ const gameover = function()
 };
 
 const keyDownHandler = function(e)
-{
+{	
+  var propagate = false;
+	
   if(!takingInput) { return; }
 	
   var c = e.key.toUpperCase();
@@ -157,7 +159,17 @@ const keyDownHandler = function(e)
 		  setTimeout(tick, 2 * TICKDELAY); 
 	    }
 	    break;
-  }	
+		
+	  default:	
+	    propagate = true;
+  	    break;
+  }
+  
+  if(! propagate)
+  {
+	  e.stopPropagation();
+	  e.preventDefault();
+  }
 };
 
 const pause = function()
