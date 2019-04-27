@@ -40,14 +40,17 @@ class HexSnakeBoard
   }
   
   snakeContainsPoint(a,b)
-  {
+  {  
 	  for(var i = 0; i < this.snake.length; i++)
 	  {
 	    var sa, sb;
 		
 		[sa, sb] = this.snake[i];
 		
-		if(a == sa && b == sb) return true;
+		if(a == sa && b == sb)
+		{
+			return true;
+		}
 	  }
 	  
 	  return false;
@@ -59,7 +62,7 @@ class HexSnakeBoard
 	  {
 		  this.apple = this.randomElement(this.hexcoords)
 	  }
-	  while(this.snake.includes(this.apple));
+	  while(this.snakeContainsPoint(this.apple));
   }
   
   makePathAroundPerimeter(a, b)
