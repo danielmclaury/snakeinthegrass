@@ -11,7 +11,7 @@ class HexSnakeBoard
 	this.honeycomb = new Honeycomb(canvas.width, canvas.height, rows, cols);
 	this.hexcoords = this.honeycomb.getHexCoords();
 	
-	this.snake = [[1,1]]; // this is okay for now, but replace with linked list or something
+	this.snake = [[1,1], [2, 2], [3, 3]]; // this is okay for now, but replace with linked list or something
 	this.snakeDir = [1, 1];
 	
 	this.snakeColor = 'green';

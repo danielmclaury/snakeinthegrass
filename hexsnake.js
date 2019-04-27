@@ -3,7 +3,7 @@ const COLS = 99;
 
 const TICKDELAY = 60;
 
-const PAUSETEXT = "Press Space";
+const PAUSETEXT = "Paused";
 const GAMEOVERTEXT = "OUCH!";
 const TEXTCOLOR = 'white';
 const TEXTOUTLINE = 'black';
@@ -25,6 +25,8 @@ const init = function()
 	context = canvas.getContext('2d');
 	scoreDiv = document.getElementById('score');
 	highScoreDiv = document.getElementById('highscore');
+	
+	initDrag();
 	
 	highScore = 0;
 	
@@ -110,44 +112,52 @@ const keyDownHandler = function(e)
 	
   var c = e.key.toUpperCase();
   
-  if(paused && c != " ") { return; }
-	
-  if("QWERT".includes(c))
+  var keyId = "key_" + c;
+  
+  var commandId = lookupCommandId(keyId);
+  
+  blinkKeyAndCommand(keyId);
+  
+  if(paused && commandId != "cmd_PAUSE") { return; }
+  
+  switch(commandId)
   {
-	  inputDir = [-1, 1];
-  }
-  else if("YUIOP".includes(c))
-  {
-	  inputDir = [1, 1];
-  }
-  else if("ASDFG".includes(c))
-  {
-	  inputDir = [-2, 0];
-  }
-  else if("HJKL;".includes(c))
-  {
-	  inputDir = [2, 0];
-  }
-  else if("ZXCV".includes(c))
-  {
-	  inputDir = [-1, -1];
-  }
-  else if("BNM,.".includes(c))
-  {
-	  inputDir = [1, -1];
-  }
-  else if(c == " ")
-  {
-	  if(! paused)
-	  {
+	  case "cmd_NW":
+	    inputDir = [-1, 1];;
+		break;
+		
+	  case "cmd_NE":
+        inputDir = [1, 1];	  
+		break;
+		
+      case "cmd_W":
+	    inputDir = [-2, 0];
+		break;
+		
+	  case "cmd_E":
+	    inputDir = [2, 0];
+		break;
+		
+	  case "cmd_SW":
+	    inputDir = [-1, -1];
+		break;
+		
+	  case "cmd_SE":
+	    inputDir = [1, -1];
+		break;
+		
+	  case "cmd_PAUSE":
+	    if(! paused)
+	    {
 		  pause();
-	  }
-	  else
-	  {
-		paused = false;
-		setTimeout(tick, 2 * TICKDELAY);  
-	  }
-  }
+	    }
+	    else
+	    {
+		  paused = false;
+		  setTimeout(tick, 2 * TICKDELAY); 
+	    }
+	    break;
+  }	
 };
 
 const pause = function()

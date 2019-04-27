@@ -1,9 +1,11 @@
 <html>
   <head>
     <title>Snake in the grass</title>
+	<script src="keydrag.js"></script>
 	<script src="honeycomb.js"></script>
 	<script src="hexsnakeboard.js"></script>
 	<script src="hexsnake.js"></script>
+	<link rel="stylesheet" type="text/css" href="keydrag.css">
   </head>
   <body onload="init();">
     <div style="display: inline-block; text-align: center;">
@@ -12,14 +14,85 @@
 	    <span style="float: right;"><b>High Score:</b> <span id="highscore">0</span></span>
 	  </div>
       <canvas id="canvas" width="640" height="480"></canvas>
-      <div>
-	    <table>
-		  <tr><td><b>QWERT</b></td><td>Move northwest<td><td><b>YUIOP</b></td><td>Move northeast<td><td></tr>
-		  <tr><td><b>ASDFG</b></td><td>Move west<td><td><b>HJKL</b></td><td>Move east<td><td></tr>
-		  <tr><td><b>ZXCV</b></td><td>Move southwest<td><td><b>BNM</b></td><td>Move southeast<td><td></tr>
-		  <tr><td><b>Space</b></td><td>Start / Pause / Resume game<td><td></tr>
-	    </table>
-	  </div>	
+      
+	  <div style="display:grid; grid-template-columns: auto auto auto auto;">
+		  
+			<div style="margin: auto auto;">Northwest:</div>
+			<div class="command" id = "cmd_NW">
+			  <div class="key" id = "key_7">7</div>
+			  <div class="key" id = "key_Q">Q</div>
+			  <div class="key" id = "key_W">W</div>
+			  <div class="key" id = "key_E">E</div>
+			  <div class="key" id = "key_R">R</div>
+			  <div class="key" id = "key_T">T</div>
+		    </div>
+			
+		    <div style="margin: auto auto;">Northeast:</div>
+			<div class="command" id = "cmd_NE">
+			  <div class="key" id = "key_Y">Y</div>
+			  <div class="key" id = "key_U">U</div>
+			  <div class="key" id = "key_I">I</div>
+			  <div class="key" id = "key_O">O</div>
+			  <div class="key" id = "key_P">P</div>
+			  <div class="key" id = "key_9">9</div>
+			</div>
+		  
+		    <div style="margin: auto auto;">West:</div>
+			<div class="command" id = "cmd_W">
+			  <div class="key" id = "key_4">4</div>
+			  <div class="key" id = "key_A">A</div>
+			  <div class="key" id = "key_S">S</div>
+			  <div class="key" id = "key_D">D</div>
+			  <div class="key" id = "key_F">F</div>
+			  <div class="key" id = "key_G">G</div>
+			</div>
+			
+			<div style="margin: auto auto;">East:</div>
+			<div class="command" id = "cmd_E">
+			  <div class="key" id = "key_H">H</div>
+			  <div class="key" id = "key_J">J</div>
+			  <div class="key" id = "key_K">K</div>
+			  <div class="key" id = "key_L">L</div>
+			  <div class="key" id = "key_;">;</div>
+			  <div class="key" id = "key_6">6</div>
+			</div>
+			
+            <div style="margin: auto auto;">Southwest:</div>
+			<div class="command" id = "cmd_SW">
+			  <div class="key" id = "key_Z">Z</div>
+			  <div class="key" id = "key_X">X</div>
+			  <div class="key" id = "key_C">C</div>
+			  <div class="key" id = "key_V">V</div>
+			  <div class="key" id = "key_1">1</div>
+		    </div>
+			
+		    <div style="margin: auto auto;">Southeast:</div>
+			<div class="command" id = "cmd_SE">
+			  <div class="key" id = "key_B">B</div>
+			  <div class="key" id = "key_N">N</div>
+			  <div class="key" id = "key_M">M</div>
+			  <div class="key" id = "key_,">,</div>
+			  <div class="key" id = "key_.">.</div>
+			  <div class="key" id = "key_3">3</div>
+			</div>
+			
+		    <div style="margin: auto auto;">Start/Pause:</div>
+			<div class="command" id = "cmd_PAUSE">
+			  <div class="key" id = "key_5">5</div>
+			  <div class="key" id = "key_ " style="width:100px;">&nbsp;</div>
+			</div>
+
+            <div style="margin: auto auto;">(unused)</div>
+            <div class="command" id = "cmd_UNUSED">
+			  <div class="key" id = "key_0">0</div>
+			  <div class="key" id = "key_2">2</div>
+			  <div class="key" id = "key_8">8</div>
+			  <div class="key" id = "key_ARROWLEFT">←</div>
+			  <div class="key" id = "key_ARROWUP">↑</div>
+			  <div class="key" id = "key_ARROWRIGHT">→</div>
+			  <div class="key" id = "key_ARROWDOWN">↓</div>
+			</div>
+	  </div>	  
 	</div>
   </body>
 </html> 
