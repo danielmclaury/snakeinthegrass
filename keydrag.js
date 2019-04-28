@@ -86,7 +86,7 @@ const blinkKeyAndCommand = function(keyId)
 	}
 	
 	setTimeout(resetHighlights, 100);
-}
+};
 
 const resetHighlights = function()
 {
@@ -103,6 +103,4 @@ const resetHighlights = function()
   {
 	  commands[i].classList.remove("highlightedCommand");
   }
-  	
-      
 };

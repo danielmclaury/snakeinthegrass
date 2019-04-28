@@ -15,7 +15,7 @@ var board;
 
 var inputDir;
 
-var paused, takingInput;
+var paused, gameOver;
 
 var score, highScore;
 
@@ -37,7 +37,7 @@ const init = function()
 
 const start = function()
 {
-	takingInput = true;
+	gameOver = false;
 	
     board = new HexSnakeBoard(canvas, ROWS, COLS);
 	board.placeApple();
@@ -89,11 +89,11 @@ const addPoints = function(points)
 	
 	scoreDiv.innerHTML = score;
 	highScoreDiv.innerHTML = highScore;
-}
+};
 
 const gameover = function()
 {  
-  takingInput = false;
+  gameOver = true;
   
   context.font = TEXTFONT;
   context.textAlign = "center";
@@ -110,8 +110,6 @@ const keyDownHandler = function(e)
 {	
   var propagate = false;
 	
-  if(!takingInput) { return; }
-	
   var c = e.key.toUpperCase();
   
   var keyId = "key_" + c;
@@ -120,12 +118,12 @@ const keyDownHandler = function(e)
   
   blinkKeyAndCommand(keyId);
   
-  if(paused && commandId != "cmd_PAUSE") { return; }
-  
+  var oldInputDir = inputDir;  
+
   switch(commandId)
   {
 	  case "cmd_NW":
-	    inputDir = [-1, 1];;
+	    inputDir = [-1, 1];
 		break;
 		
 	  case "cmd_NE":
@@ -149,20 +147,28 @@ const keyDownHandler = function(e)
 		break;
 		
 	  case "cmd_PAUSE":
-	    if(! paused)
-	    {
-		  pause();
-	    }
-	    else
-	    {
-		  paused = false;
-		  setTimeout(tick, 2 * TICKDELAY); 
-	    }
+	    if(! gameOver)
+		{
+			if(! paused)
+			{
+			  pause();
+			}
+			else
+			{
+			  paused = false;
+			  setTimeout(tick, 2 * TICKDELAY); 
+			}
+		}
 	    break;
 		
 	  default:	
 	    propagate = true;
   	    break;
+  }
+  
+  if(paused)
+  {
+    inputDir = oldInputDir;
   }
   
   if(! propagate)
@@ -183,4 +189,4 @@ const pause = function()
 	context.lineWidth = 6;
 	context.strokeText(PAUSETEXT, canvas.width/2, canvas.height/2);
 	context.fillText(PAUSETEXT, canvas.width/2, canvas.height/2);  
-}
+};
