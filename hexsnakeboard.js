@@ -62,7 +62,7 @@ class HexSnakeBoard
 	  {
 		  this.apple = this.randomElement(this.hexcoords)
 	  }
-	  while(this.snakeContainsPoint(this.apple));
+	  while(this.snakeContainsPoint(this.apple[0], this.apple[1]));
   }
   
   makePathAroundPerimeter(a, b)
