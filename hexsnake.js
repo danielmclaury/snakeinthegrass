@@ -37,8 +37,6 @@ const init = function()
 
 const start = function()
 {
-	gameOver = false;
-	
     board = new HexSnakeBoard(canvas, ROWS, COLS);
 	board.placeApple();
 	
@@ -46,7 +44,8 @@ const start = function()
 	board.fillGrid();	
     board.drawSnake();
 	board.drawApple();
-	
+
+    gameOver = false;	
     pause();	
 	
 	inputDir = [1, 1];

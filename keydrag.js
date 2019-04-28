@@ -2,7 +2,8 @@
 
 const initDrag = function()
 {
-  var keys = document.getElementsByClassName("key");
+  var keys = document.querySelectorAll(".key");
+  
   
   for(var i = 0; i < keys.length; i++)
   {
@@ -10,7 +11,7 @@ const initDrag = function()
 	keys[i].ondragstart = dragStartHandler;
   }
   
-  var commands = document.getElementsByClassName("command");
+  var commands = document.querySelectorAll(".command");
   
   for(var i = 0; i < commands.length; i++)
   {
@@ -36,7 +37,7 @@ const dropHandler = function(e)
   
   var commandDiv = e.target;
   
-  while(commandDiv.className != "command")
+  while(! commandDiv.classList.contains("command"))
   {
 	  commandDiv = commandDiv.parentElement;
 	  
@@ -56,7 +57,7 @@ const lookupCommandId = function(keyId)
 	
 	while(keyDiv != null)
 	{
-		if(keyDiv.className == "command")
+		if(keyDiv.classList.contains("command"))
 		{
 			return keyDiv.id;
 		}
@@ -90,14 +91,14 @@ const blinkKeyAndCommand = function(keyId)
 
 const resetHighlights = function()
 {
-  var keys = document.getElementsByClassName("key");
+  var keys = document.querySelectorAll(".key");
   
   for(var i = 0; i < keys.length; i++)
   {
 	  keys[i].classList.remove("highlightedKey");
   }
 	
-  var commands = document.getElementsByClassName("command");
+  var commands = document.querySelectorAll(".command");
   
   for(var i = 0; i < commands.length; i++)
   {
