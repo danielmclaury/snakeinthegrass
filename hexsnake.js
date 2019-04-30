@@ -105,11 +105,34 @@ const gameover = function()
   setTimeout(start, 1000);
 };
 
+const rotateDirection = function(d, n)
+{
+	const directions = [[2, 0], [1, 1], [-1, 1], [-2, 0], [-1, -1], [1, -1]];
+	
+	var directionIndex;
+	
+	for(var i = 0; i < directions.length; i++)
+	{
+		if(d[0] == directions[i][0] && d[1] == directions[i][1])
+		{
+			directionIndex = i;
+			break;
+		}
+	}
+	
+	directionIndex = (directionIndex + n + directions.length) % directions.length;
+	
+	return directions[directionIndex];
+}
+
 const keyDownHandler = function(e)
 {	
   var propagate = false;
 	
   var c = e.key.toUpperCase();
+  
+  // fix for Firefox
+  if(c == "CONTROL") { c = "CTRL"; }
   
   var keyId = "key_" + c;
   
@@ -145,6 +168,22 @@ const keyDownHandler = function(e)
 	    inputDir = [1, -1];
 		break;
 		
+	  case "cmd_60L":
+        inputDir = rotateDirection(inputDir, 1);
+        break;
+
+      case "cmd_60R":
+        inputDir = rotateDirection(inputDir, -1);
+        break;
+
+      case "cmd_120L":
+        inputDir = rotateDirection(inputDir, 2);
+        break;
+
+      case "cmd_120R":
+        inputDir = rotateDirection(inputDir, -2);
+        break;
+	  
 	  case "cmd_PAUSE":
 	    if(! gameOver)
 		{
@@ -160,7 +199,7 @@ const keyDownHandler = function(e)
 		}
 	    break;
 		
-	  default:	
+	  default:
 	    propagate = true;
   	    break;
   }

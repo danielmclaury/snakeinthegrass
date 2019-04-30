@@ -1,5 +1,3 @@
-
-
 const initDrag = function()
 {
   var keys = document.querySelectorAll(".key");
